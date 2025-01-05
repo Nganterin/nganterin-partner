@@ -76,7 +76,7 @@ export const LogInContainer = () => {
             </p>
             <form className="my-8" onSubmit={handleSubmit}>
                 <LabelInputContainer className="mb-4">
-                    <Label htmlFor="email">Email Address</Label>
+                    <Label htmlFor="email">Manager Email Address</Label>
                     <Input id="email" name="email" placeholder="projectmayhem@fc.com" type="email" />
                 </LabelInputContainer>
                 <LabelInputContainer className="mb-4">
