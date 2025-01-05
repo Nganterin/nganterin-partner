@@ -1,12 +1,10 @@
 import { Button } from "@nextui-org/react";
-import { BackGroundGrid } from "../ui/background-grid";
 import { FaPhoenixFramework } from "react-icons/fa";
 import Link from "next/link";
 
 export const Hero = () => {
   return (
     <div className="">
-      <BackGroundGrid boxSize={50}>
         <div className="py-32">
           <div className="max-w-4xl mx-auto space-y-5">
             <h1 className="text-center text-4xl sm:text-5xl font-semibold text-sky-700">
@@ -23,6 +21,8 @@ export const Hero = () => {
                 radius="full"
                 size="lg"
                 variant="flat"
+                as={Link}
+                href="/auth/register"
                 className="text-white bg-gradient-to-r from-sky-500 to-sky-700 shadow-lg shadow-sky-700/30"
               >
                 Partner Now <FaPhoenixFramework size={22} color="#fff" />
@@ -41,7 +41,6 @@ export const Hero = () => {
             </div>
           </div>
         </div>
-      </BackGroundGrid>
     </div>
   );
 };
