@@ -402,7 +402,7 @@ export const RegisterContainer = () => {
           />
         </div>
         <button
-          className="bg-gradient-to-br relative flex flex-row gap-2 justify-center items-center group/btn from-sky-500 to-sky-700 text-white w-full rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+          className="bg-gradient-to-br relative flex flex-row gap-2 justify-center items-center group/btn from-sky-500 to-sky-700 text-white w-full rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] my-6"
           type="submit"
           disabled={isLoading}
         >
@@ -411,7 +411,7 @@ export const RegisterContainer = () => {
             size="sm"
             className={isLoading ? "" : "hidden"}
           />
-          Log In &rarr;
+          Register &rarr;
           <BottomGradient />
         </button>
         <Link href={`/auth/login`}>
