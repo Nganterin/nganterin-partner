@@ -22,7 +22,7 @@ export default function Home() {
             as={Link}
             href="/auth/login"
             radius="full"
-            className="text-white bg-gradient-to-r from-sky-500 to-sky-700"
+            className="text-white bg-gradient-to-r from-sky-500 to-sky-700 shadow-lg shadow-sky-700/30"
           >
             Sign In <GoArrowUpRight size={18} />
           </Button>

@@ -23,7 +23,7 @@ export const Hero = () => {
                 radius="full"
                 size="lg"
                 variant="flat"
-                className="text-white bg-gradient-to-r from-sky-500 to-sky-700"
+                className="text-white bg-gradient-to-r from-sky-500 to-sky-700 shadow-lg shadow-sky-700/30"
               >
                 Partner Now <FaPhoenixFramework size={22} color="#fff" />
               </Button>
