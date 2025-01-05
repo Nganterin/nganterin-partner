@@ -25,17 +25,6 @@ interface UploadedFile {
   };
 }
 
-interface FileUploadProps {
-  files: File[];
-  setFiles: (files: File[]) => void;
-  setInputData: React.Dispatch<
-    React.SetStateAction<{
-      hotel_photos: UploadedFile["data"][];
-      [key: string]: any;
-    }>
-  >;
-}
-
 interface CompanyFormData {
   company_name: FormDataEntryValue | null;
   owner: FormDataEntryValue | null;
