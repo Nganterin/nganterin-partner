@@ -1,12 +1,16 @@
+import { BackGroundGrid } from "@/components/ui/background-grid";
+
 const Layout = ({
     children,
   }: Readonly<{
     children: React.ReactNode;
   }>) => {
     return (
-        <div className="min-h-screen bg-gradient-to-b from-sky-100 to-slate-50">
+      <BackGroundGrid boxSize={50}>
+        <div className="min-h-screen">
             {children}
         </div>
+      </BackGroundGrid>
     )
   }
 
