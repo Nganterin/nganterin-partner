@@ -51,7 +51,7 @@ export const Sidebar = () => {
         <div className="h-4"></div>
         <Button
           as={Link}
-          href="/dashboard/"
+          href="/dashboard/status"
           isIconOnly={isCompact}
           className={`${
             isCompact ? "" : "flex justify-start"

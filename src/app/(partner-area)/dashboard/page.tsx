@@ -5,7 +5,7 @@ import { BaseContainer } from "@/components/BaseContainer"
 const Page = () => {
     return (
         <div className="">
-            <BaseContainer>Hai</BaseContainer>
+            <BaseContainer title="hello">Hai</BaseContainer>
         </div>
     )
 }
