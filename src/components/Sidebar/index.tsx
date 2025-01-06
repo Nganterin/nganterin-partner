@@ -3,16 +3,18 @@
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { IoIosInformationCircleOutline } from "react-icons/io";
+import { IoIosInformationCircleOutline, IoIosTrendingUp } from "react-icons/io";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
 } from "react-icons/md";
 import { SlLogout } from "react-icons/sl";
 import Cookies from "js-cookie";
+import { usePathname } from "next/navigation";
 
 export const Sidebar = () => {
   const [isCompact, setIsCompact] = useState(false);
+  const pathname = usePathname()
 
   useEffect(() => {
     const lastCompactMode = Cookies.get("last_sidebar_compact");
@@ -51,13 +53,24 @@ export const Sidebar = () => {
         <div className="h-4"></div>
         <Button
           as={Link}
+          href="/dashboard/"
+          isIconOnly={isCompact}
+          className={`${
+            isCompact ? "" : "flex justify-start"
+          } w-full text-gray-800 ${pathname.endsWith('/dashboard') ? "bg-slate-50" : "bg-slate-50/50"} hover:bg-slate-50 transition-all duration-400`}
+          startContent={<IoIosTrendingUp size={22} />}
+        >
+          <p className={isCompact ? "hidden" : ""}>Analytics</p>
+        </Button>
+        <Button
+          as={Link}
           href="/dashboard/status"
           isIconOnly={isCompact}
           className={`${
             isCompact ? "" : "flex justify-start"
-          } w-full bg-slate-50 text-gray-800`}
+          } w-full text-gray-800 ${pathname.endsWith('/dashboard/status') ? "bg-slate-50" : "bg-slate-50/50"} hover:bg-slate-50 transition-all duration-400`}
+          startContent={<IoIosInformationCircleOutline size={22} />}
         >
-          <IoIosInformationCircleOutline size={22} />{" "}
           <p className={isCompact ? "hidden" : ""}>Approval Status</p>
         </Button>
       </div>

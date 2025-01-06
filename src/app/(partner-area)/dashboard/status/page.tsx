@@ -31,7 +31,7 @@ const Page = () => {
       const res = await fetchWithAuth(BASE_API + "/partner/approval/status", {
         method: "GET",
       });
-      
+
       updateLastTimeCheck();
       if (res.ok) {
         const data = await res.json();
@@ -56,7 +56,10 @@ const Page = () => {
 
   return (
     <div className="">
-      <BaseContainer title="Approval Status">
+      <BaseContainer
+        title="Approval Status"
+        description="The status of your company's data approval will be displayed here."
+      >
         <div className="w-full space-y-6">
           <ApprovalProgress
             isVerified={partnerData ? partnerData.is_data_verified : false}
