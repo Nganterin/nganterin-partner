@@ -17,28 +17,58 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-];
+import { toast } from "sonner";
+import fetchWithAuth from "@/utilities/fetchWithAuth";
+import { BASE_API } from "@/utilities/environment";
+import { useEffect, useState } from "react";
 
 const chartConfig = {
-  desktop: {
-    label: "Visitor",
+  reservations: {
+    label: "Reservations",
     color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig;
 
+interface ChartDataType {
+  month: string;
+  reservations: number;
+}
+
 export function VisitorChart() {
+  const [chartData, setChartData] = useState<ChartDataType[]>([]);
+
+  const fetchData = async () => {
+    try {
+      const res = await fetchWithAuth(
+        BASE_API + "/partner/analytic/monthly-reservation",
+        {
+          method: "GET",
+        }
+      );
+
+      const data = await res.json();
+      if (res.ok) {
+        setChartData(data.data);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Connection failed");
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <Card className="w-full h-full bg-slate-50 rounded-lg p-2 shadow-lg shadow-sky-800/30">
       <CardHeader>
-        <CardTitle>Line Chart</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Reservation Analytics</CardTitle>
+        <CardDescription>
+          {chartData[0]?.month} - {chartData[chartData.length - 1]?.month}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -63,9 +93,9 @@ export function VisitorChart() {
               content={<ChartTooltipContent hideLabel />}
             />
             <Line
-              dataKey="desktop"
-              type="natural"
-              stroke="var(--color-desktop)"
+              dataKey="reservations"
+              type="linear"
+              stroke="var(--color-reservations)"
               strokeWidth={2}
               dot={false}
             />
@@ -77,7 +107,7 @@ export function VisitorChart() {
           Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          Showing total reservations for the last 12 months
         </div>
       </CardFooter>
     </Card>
