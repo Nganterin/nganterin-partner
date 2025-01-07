@@ -1,6 +1,7 @@
 "use client";
 
 import { BaseContainer } from "@/components/BaseContainer";
+import { OrderAnalytic } from "@/components/OrderAnalytic";
 import { HotelTable } from "@/components/HotelTable";
 import { VisitorChart } from "@/components/VisitorChart";
 
@@ -11,7 +12,8 @@ const Page = () => {
         <div className="w-1/2">
           <VisitorChart />
         </div>
-        <div className="w-1/2 h-max">
+        <div className="w-1/2 h-max space-y-4">
+          <OrderAnalytic />
           <HotelTable />
         </div>
       </div>

@@ -47,7 +47,7 @@ export function VisitorChart() {
   const fetchData = async () => {
     try {
       const res = await fetchWithAuth(
-        BASE_API + "/partner/analytic/yearly-reservation",
+        BASE_API + "/partner/analytic/reservation/yearly",
         {
           method: "GET",
         }
