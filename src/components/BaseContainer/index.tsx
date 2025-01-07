@@ -16,7 +16,7 @@ export const BaseContainer = ({
   description?: string;
 }>) => {
   return (
-    <Card className="w-full h-full bg-slate-50 rounded-lg p-2 shadow-lg shadow-sky-800/30">
+    <Card className="w-max flex-grow h-full bg-slate-50 rounded-lg p-2 shadow-lg shadow-sky-800/30">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>

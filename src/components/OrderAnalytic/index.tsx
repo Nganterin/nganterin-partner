@@ -48,7 +48,7 @@ export const OrderAnalytic = () => {
   }, []);
 
   return (
-    <div className="w-full flex flex-row gap-4">
+    <div className="w-full flex flex-wrap gap-4">
       <BaseContainer title="Finance Information" description="Comprehensive hotel income overview">
         <div className="w-max mx-auto">
           <div className="flex flex-row gap-8">
