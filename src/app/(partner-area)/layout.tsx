@@ -14,7 +14,7 @@ const Layout = ({
     <BackGroundGrid boxSize={50}>
       <div className="min-h-screen flex flex-row">
         <Sidebar />
-        <div className="flex-grow max-h-screen overflow-scroll p-4 space-y-4">
+        <div className="flex-grow max-h-screen overflow-auto p-4 space-y-4">
           <Navbar />
           {children}
         </div>

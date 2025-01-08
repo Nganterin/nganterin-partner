@@ -52,7 +52,7 @@ export function HotelTable() {
         <CardTitle>Your Hotels</CardTitle>
         <CardDescription>A list of your registered hotels.</CardDescription>
       </CardHeader>
-      <CardContent className="overflow-x-scroll">
+      <CardContent className="overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>

@@ -11,6 +11,7 @@ import {
 import { SlLogout } from "react-icons/sl";
 import Cookies from "js-cookie";
 import { usePathname } from "next/navigation";
+import { RiHotelLine } from "react-icons/ri";
 
 export const Sidebar = () => {
   const [isCompact, setIsCompact] = useState(false);
@@ -53,7 +54,7 @@ export const Sidebar = () => {
         <div className="h-4"></div>
         <Button
           as={Link}
-          href="/dashboard/"
+          href="/dashboard"
           isIconOnly={isCompact}
           className={`${
             isCompact ? "" : "flex justify-start"
@@ -61,6 +62,17 @@ export const Sidebar = () => {
           startContent={<IoIosTrendingUp size={22} />}
         >
           <p className={isCompact ? "hidden" : ""}>Analytics</p>
+        </Button>
+        <Button
+          as={Link}
+          href="/dashboard/hotel"
+          isIconOnly={isCompact}
+          className={`${
+            isCompact ? "" : "flex justify-start"
+          } w-full text-gray-800 ${pathname.endsWith('/dashboard/hotel') ? "bg-slate-50" : "bg-slate-50/50"} hover:bg-slate-50 transition-all duration-400`}
+          startContent={<RiHotelLine size={22} />}
+        >
+          <p className={isCompact ? "hidden" : ""}>Hotels</p>
         </Button>
         <Button
           as={Link}
