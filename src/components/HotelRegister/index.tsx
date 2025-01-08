@@ -20,6 +20,7 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { FilePondFile } from "filepond";
 import { toast } from "sonner";
 import { BASE_API } from "@/utilities/environment";
+import fetchWithAuth from "@/utilities/fetchWithAuth";
 
 registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
 
@@ -45,15 +46,6 @@ interface HotelPhoto {
 
 interface HotelFacility {
   facility: string;
-}
-
-interface HotelLocation {
-  country: string;
-  state: string;
-  city: string;
-  zip_code: number;
-  complete_address: string;
-  gmaps: string;
 }
 
 export const HotelRegister = () => {
@@ -116,12 +108,53 @@ export const HotelRegister = () => {
     setHotelFacilities((prev) => prev.filter((_, i) => i !== index));
   };
 
-  useEffect(() => {
-    console.log({ roomData });
-  }, [roomData]);
+  const handleSubmit = async (e: any) => {
+    e.preventDefault()
+    const formData = new FormData(e.target);
+
+    const inputData = {
+      name: formData.get("name"),
+      description: formData.get("description"),
+      hotel_rooms: roomData,
+      hotels_location: {
+        country: formData.get("country"),
+        state: formData.get("state"),
+        city: formData.get("city"),
+        zip_code: formData.get("zip_code"),
+        complete_address: formData.get("complete_address"),
+        gmaps: formData.get("gmaps"),
+      },
+      hotel_photos: hotelPhotoFiles,
+      hotel_facilities: hotelFacilities,
+    };
+
+    try {
+      const res = await fetchWithAuth(BASE_API + "/partner/hotel/register", {
+        method: "POST",
+        body: JSON.stringify(inputData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        window.open(
+          "https://nganterin.web.id/detail/hotel/" + data.data,
+          "_blank"
+        );
+        toast.success("Hotel register success");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Connection failed");
+    }
+  };
 
   return (
-    <form className="flex flex-row gap-4">
+    <form className="flex flex-row gap-4" onSubmit={handleSubmit}>
       <div className="h-max">
         <BaseContainer
           title="Hotel Register"
@@ -130,6 +163,7 @@ export const HotelRegister = () => {
           <LabelInputContainer className="mb-4">
             <Label htmlFor="name">Hotel Name</Label>
             <Input
+              required
               id="name"
               name="name"
               placeholder="The Apurva Kempinski Depok"
@@ -148,6 +182,7 @@ export const HotelRegister = () => {
             <LabelInputContainer className="mb-4">
               <Label htmlFor="country">Country</Label>
               <Input
+                required
                 id="country"
                 name="country"
                 placeholder="Indonesia"
@@ -157,6 +192,7 @@ export const HotelRegister = () => {
             <LabelInputContainer className="mb-4">
               <Label htmlFor="state">State</Label>
               <Input
+                required
                 id="state"
                 name="state"
                 placeholder="West Java"
@@ -167,11 +203,18 @@ export const HotelRegister = () => {
           <div className="w-full flex flex-row gap-4">
             <LabelInputContainer className="mb-4">
               <Label htmlFor="city">City</Label>
-              <Input id="city" name="city" placeholder="Depok" type="text" />
+              <Input
+                required
+                id="city"
+                name="city"
+                placeholder="Depok"
+                type="text"
+              />
             </LabelInputContainer>
             <LabelInputContainer className="mb-4">
               <Label htmlFor="zip_code">Zip Code</Label>
               <Input
+                required
                 id="zip_code"
                 name="zip_code"
                 placeholder="17825"
@@ -180,8 +223,17 @@ export const HotelRegister = () => {
             </LabelInputContainer>
           </div>
           <LabelInputContainer className="mb-4">
+            <Label htmlFor="complete_address">Complete Address</Label>
+            <Textarea
+              id="complete_address"
+              name="complete_address"
+              placeholder="Jalan Raya Nusa Dua Selatan..."
+            />
+          </LabelInputContainer>
+          <LabelInputContainer className="mb-4">
             <Label htmlFor="gmaps">Maps URL</Label>
             <Input
+              required
               id="gmaps"
               name="gmaps"
               placeholder="https://maps.app.goo.gl/..."
@@ -197,6 +249,7 @@ export const HotelRegister = () => {
                   className="w-full flex flex-row gap-2 items-center"
                 >
                   <Input
+                    required
                     placeholder="Wifi"
                     type="text"
                     value={item.facility}
@@ -288,6 +341,7 @@ export const HotelRegister = () => {
                 <LabelInputContainer className="mb-4">
                   <Label htmlFor="type">Type Name</Label>
                   <Input
+                    required
                     id="type"
                     name="type"
                     placeholder="Deluxe Queen"
@@ -302,6 +356,7 @@ export const HotelRegister = () => {
                   <LabelInputContainer className="mb-4">
                     <Label htmlFor="bed_type">Bed Type</Label>
                     <Input
+                      required
                       id="bed_type"
                       name="bed_type"
                       placeholder="Queen"
@@ -315,6 +370,7 @@ export const HotelRegister = () => {
                   <LabelInputContainer className="mb-4">
                     <Label htmlFor="max_visitor">Max Visitor</Label>
                     <Input
+                      required
                       id="max_visitor"
                       name="max_visitor"
                       placeholder="1"
@@ -332,13 +388,14 @@ export const HotelRegister = () => {
                       Room Size (m<sup>2</sup>)
                     </Label>
                     <Input
+                      required
                       id="room_size"
                       name="room_size"
                       placeholder="0"
                       type="number"
                       value={item.room_size}
                       onChange={(e) =>
-                        handleRoomChange(index, "room_size", e.target.value)
+                        handleRoomChange(index, "room_size", parseInt(e.target.value) || 0)
                       }
                     />
                   </LabelInputContainer>
@@ -363,26 +420,28 @@ export const HotelRegister = () => {
                 <LabelInputContainer className="mb-4">
                   <Label htmlFor="total_room">Total Room Available</Label>
                   <Input
+                    required
                     id="total_room"
                     name="total_room"
                     placeholder="0"
                     type="number"
                     value={item.total_room}
                     onChange={(e) =>
-                      handleRoomChange(index, "total_room", e.target.value)
+                      handleRoomChange(index, "total_room", parseInt(e.target.value) || 0)
                     }
                   />
                 </LabelInputContainer>
                 <LabelInputContainer className="mb-4">
                   <Label htmlFor="overnight_price">Overnight Price (Rp)</Label>
                   <Input
+                    required
                     id="overnight_price"
                     name="overnight_price"
                     placeholder="0"
                     type="number"
                     value={item.overnight_price}
                     onChange={(e) =>
-                      handleRoomChange(index, "overnight_price", e.target.value)
+                      handleRoomChange(index, "overnight_price", parseInt(e.target.value) || 0)
                     }
                   />
                 </LabelInputContainer>
@@ -463,6 +522,7 @@ export const HotelRegister = () => {
           </BaseContainer>
         </div>
       </div>
+      <Button type="submit">Submit</Button>
     </form>
   );
 };
