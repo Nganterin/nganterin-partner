@@ -3,7 +3,7 @@
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { IoIosInformationCircleOutline, IoIosTrendingUp } from "react-icons/io";
+import { IoIosInformationCircleOutline, IoIosList, IoIosTrendingUp } from "react-icons/io";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
@@ -73,6 +73,17 @@ export const Sidebar = () => {
           startContent={<RiHotelLine size={22} />}
         >
           <p className={isCompact ? "hidden" : ""}>Hotels</p>
+        </Button>
+        <Button
+          as={Link}
+          href="/dashboard/reservation"
+          isIconOnly={isCompact}
+          className={`${
+            isCompact ? "" : "flex justify-start"
+          } w-full text-gray-800 ${pathname.endsWith('/dashboard/reservation') ? "bg-slate-50" : "bg-slate-50/50"} hover:bg-slate-50 transition-all duration-400`}
+          startContent={<IoIosList size={22} />}
+        >
+          <p className={isCompact ? "hidden" : ""}>Reservations</p>
         </Button>
         <Button
           as={Link}
