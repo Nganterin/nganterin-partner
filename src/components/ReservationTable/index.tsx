@@ -20,8 +20,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { Spinner } from "@nextui-org/react";
 
 export const ReservationTable = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [hotelData, setHotelData] = useState<any>([]);
   const [activeHotelIndex, setActiveHotelIndex] = useState<number>(0);
   const [reservationData, setReservationData] = useState([]);
@@ -47,6 +49,7 @@ export const ReservationTable = () => {
 
   const fetchReservationData = async (hotelID: string) => {
     try {
+      setIsLoading(true);
       const res = await fetchWithAuth(
         BASE_API + `/partner/reservation/hotel/getall?id=${hotelID}`,
         {
@@ -63,6 +66,8 @@ export const ReservationTable = () => {
     } catch (err) {
       console.error(err);
       toast.error("Connection failed");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -72,7 +77,7 @@ export const ReservationTable = () => {
 
   return (
     <BaseContainer>
-      <div className="mb-5">
+      <div className="mb-5 flex flex-row gap-4">
         <Select
           defaultValue={activeHotelIndex.toString()}
           onValueChange={(e) => {
@@ -82,7 +87,7 @@ export const ReservationTable = () => {
             fetchReservationData(hotelData[index].id);
           }}
         >
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="min-w-[300px] w-max">
             <SelectValue placeholder="Theme" />
           </SelectTrigger>
           <SelectContent>
@@ -95,6 +100,7 @@ export const ReservationTable = () => {
             })}
           </SelectContent>
         </Select>
+        <Spinner size="sm" className={isLoading ? "" : "invisible"}/>
       </div>
       <Table>
         <TableHeader>
