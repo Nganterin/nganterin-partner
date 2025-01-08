@@ -73,11 +73,7 @@ export const HotelRegister = () => {
         overnight_price: 0,
         total_room: 10,
         total_booked: 0,
-        hotel_room_photos: [
-          {
-            url: "",
-          },
-        ],
+        hotel_room_photos: [],
       },
     ]);
   };
@@ -94,6 +90,10 @@ export const HotelRegister = () => {
     };
     setRoomData(updatedRoomData);
   };
+
+  useEffect(() => {
+    console.log({ roomData });
+  }, [roomData]);
 
   return (
     <form className="flex flex-row gap-4">
@@ -323,6 +323,53 @@ export const HotelRegister = () => {
                     }
                   />
                 </LabelInputContainer>
+                <Label className="pb-2">{item.type} Room Photos</Label>
+                <p className="text-xs opacity-70 mb-2">
+                  Tips: Highly recommended to upload 3 Photos
+                </p>
+                <FilePond
+                  key={index}
+                  credits={false}
+                  allowMultiple={true}
+                  maxFiles={7}
+                  allowRevert={false}
+                  acceptedFileTypes={["image/*"]}
+                  name="file"
+                  required
+                  labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+                  server={{
+                    process: {
+                      url: `${BASE_API}/files/upload`,
+                      onload: (response: any): string => {
+                        try {
+                          const data: UploadedFileType = JSON.parse(response);
+                          setRoomData((prevRoomData) => {
+                            const newRoomData = [...prevRoomData];
+                            const currentItem = { ...newRoomData[index] };
+                            const updatedPhotos = [
+                              ...(currentItem.hotel_room_photos || []),
+                              { url: data.data.public_url },
+                            ];
+                            currentItem.hotel_room_photos = updatedPhotos;
+                            newRoomData[index] = currentItem;
+                            return newRoomData;
+                          });
+                          return response;
+                        } catch (error) {
+                          console.error("Error parsing response:", error);
+                          return "Error processing upload response";
+                        }
+                      },
+                      onerror: (error: any): void => {
+                        console.error("Upload error:", error);
+                      },
+                    },
+                    revert: null,
+                    restore: null,
+                    load: null,
+                    fetch: null,
+                  }}
+                />
                 <div className="flex flex-row justify-end pt-3">
                   <Button
                     onClick={() => handleDeleteRoom(index)}
