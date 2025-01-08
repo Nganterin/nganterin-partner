@@ -33,10 +33,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${poppins.className} antialiased bg-slate-50 font-sans text-slate-900 min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} ${poppins.className} antialiased bg-slate-50 font-sans text-slate-900 min-h-screen overflow-hidden`}
       >
         <Provider>
-          {children}
+          <div className="h-screen overflow-auto">{children}</div>
           <Toaster richColors />
         </Provider>
       </body>
