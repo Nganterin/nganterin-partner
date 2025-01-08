@@ -57,9 +57,24 @@ interface HotelLocation {
 }
 
 export const HotelRegister = () => {
-  const [roomData, setRoomData] = useState<HotelRoom[]>([]);
+  const [roomData, setRoomData] = useState<HotelRoom[]>([
+    {
+      type: "",
+      max_visitor: 2,
+      bed_type: "",
+      room_size: 20,
+      smoking_allowed: false,
+      overnight_price: 0,
+      total_room: 10,
+      total_booked: 0,
+      hotel_room_photos: [],
+    },
+  ]);
   const [hotelPhotoBuffers, setHotelPhotoBuffers] = useState<File[]>([]);
   const [hotelPhotoFiles, setHotelPhotoFiles] = useState<HotelPhoto[]>([]);
+  const [hotelFacilities, setHotelFacilities] = useState<HotelFacility[]>([
+    { facility: "" },
+  ]);
 
   const handleAddRoom = () => {
     setRoomData([
@@ -89,6 +104,16 @@ export const HotelRegister = () => {
       [name]: value,
     };
     setRoomData(updatedRoomData);
+  };
+
+  const handleFacilitiesInputChange = (index: number, value: string) => {
+    setHotelFacilities((prev) =>
+      prev.map((item, i) => (i === index ? { ...item, facility: value } : item))
+    );
+  };
+
+  const handleFacilitiesRemove = (index: number) => {
+    setHotelFacilities((prev) => prev.filter((_, i) => i !== index));
   };
 
   useEffect(() => {
@@ -163,6 +188,44 @@ export const HotelRegister = () => {
               type="text"
             />
           </LabelInputContainer>
+          <div className="space-y-2 mb-4">
+            <Label>Facilities</Label>
+            {hotelFacilities.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className="w-full flex flex-row gap-2 items-center"
+                >
+                  <Input
+                    placeholder="Wifi"
+                    type="text"
+                    value={item.facility}
+                    onChange={(e) =>
+                      handleFacilitiesInputChange(index, e.target.value)
+                    }
+                  />
+                  <Button
+                    onClick={() => handleFacilitiesRemove(index)}
+                    color="danger"
+                    variant="ghost"
+                    size="sm"
+                  >
+                    Delete
+                  </Button>
+                </div>
+              );
+            })}
+            <Button
+              onClick={() => {
+                setHotelFacilities([...hotelFacilities, { facility: "" }]);
+              }}
+              className="w-full bg-gradient-to-r from-sky-500 to-sky-700 text-white font-bold"
+              isIconOnly
+              size="sm"
+            >
+              +
+            </Button>
+          </div>
           <Label className="pb-2">Hotel Photos</Label>
           <p className="text-xs opacity-70 mb-2">
             Tips: Highly recommended to upload 7 Photos
