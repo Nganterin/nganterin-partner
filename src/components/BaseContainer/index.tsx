@@ -10,18 +10,24 @@ export const BaseContainer = ({
   children,
   title,
   description,
+  className,
 }: Readonly<{
-  children: React.ReactNode;
-  title: string;
+  children?: React.ReactNode;
+  title?: string;
   description?: string;
+  className?: string;
 }>) => {
   return (
-    <Card className="w-max flex-grow h-full bg-slate-50 rounded-lg p-2 shadow-lg shadow-sky-800/30">
-      <CardHeader>
+    <Card
+      className={`${className} w-max flex-grow h-max bg-slate-50 rounded-lg p-2 shadow-lg shadow-sky-800/30`}
+    >
+      <CardHeader className={!title && !description ? "hidden" : ""}>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardContent>{children}</CardContent>
+      <CardContent className={!title && !description ? "mt-5" : ""}>
+        {children}
+      </CardContent>
     </Card>
   );
 };
