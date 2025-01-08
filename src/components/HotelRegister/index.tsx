@@ -3,7 +3,7 @@ import { BaseContainer } from "../BaseContainer";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "@nextui-org/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -12,6 +12,16 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
+import { FilePond, registerPlugin } from "react-filepond";
+import "filepond/dist/filepond.min.css";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+import { FilePondFile } from "filepond";
+import { toast } from "sonner";
+import { BASE_API } from "@/utilities/environment";
+
+registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
 
 interface HotelRoomPhoto {
   url: string;
@@ -29,8 +39,27 @@ interface HotelRoom {
   hotel_room_photos: HotelRoomPhoto[];
 }
 
+interface HotelPhoto {
+  url: string;
+}
+
+interface HotelFacility {
+  facility: string;
+}
+
+interface HotelLocation {
+  country: string;
+  state: string;
+  city: string;
+  zip_code: number;
+  complete_address: string;
+  gmaps: string;
+}
+
 export const HotelRegister = () => {
   const [roomData, setRoomData] = useState<HotelRoom[]>([]);
+  const [hotelPhotoBuffers, setHotelPhotoBuffers] = useState<File[]>([]);
+  const [hotelPhotoFiles, setHotelPhotoFiles] = useState<HotelPhoto[]>([]);
 
   const handleAddRoom = () => {
     setRoomData([
@@ -134,6 +163,54 @@ export const HotelRegister = () => {
               type="text"
             />
           </LabelInputContainer>
+          <Label className="pb-2">Hotel Photos</Label>
+          <p className="text-xs opacity-70 mb-2">
+            Tips: Highly recommended to upload 7 Photos
+          </p>
+          <FilePond
+            files={hotelPhotoBuffers}
+            onupdatefiles={(fileItems: FilePondFile[]) => {
+              setHotelPhotoBuffers(
+                fileItems.map((fileItem) => fileItem.file as File)
+              );
+            }}
+            onprocessfiles={() => {
+              toast.success("File have been processed");
+            }}
+            credits={false}
+            allowMultiple={true}
+            maxFiles={7}
+            allowRevert={false}
+            acceptedFileTypes={["image/*"]}
+            name="file"
+            required
+            labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+            server={{
+              process: {
+                url: `${BASE_API}/files/upload`,
+                onload: (response: any): string => {
+                  try {
+                    const data: UploadedFileType = JSON.parse(response);
+                    setHotelPhotoFiles((prevFiles) => [
+                      ...prevFiles,
+                      { url: data.data.public_url },
+                    ]);
+                    return response;
+                  } catch (error) {
+                    console.error("Error parsing response:", error);
+                    return "Error processing upload response";
+                  }
+                },
+                onerror: (error: any): void => {
+                  console.error("Upload error:", error);
+                },
+              },
+              revert: null,
+              restore: null,
+              load: null,
+              fetch: null,
+            }}
+          />
         </BaseContainer>
       </div>
       <div className="h-max flex flex-col ">

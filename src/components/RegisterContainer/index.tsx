@@ -14,17 +14,6 @@ import "filepond/dist/filepond.min.css";
 import { FilePondFile } from "filepond";
 import { useRouter } from "next/navigation";
 
-interface UploadedFile {
-  status: number;
-  message: string;
-  data: {
-    id: string;
-    public_url: string;
-    original_file_name: string;
-    size: string;
-  };
-}
-
 interface CompanyFormData {
   company_name: FormDataEntryValue | null;
   owner: FormDataEntryValue | null;
@@ -337,7 +326,7 @@ export const RegisterContainer = () => {
                 url: `${BASE_API}/files/upload`,
                 onload: (response: any): string => {
                   try {
-                    const data: UploadedFile = JSON.parse(response);
+                    const data: UploadedFileType = JSON.parse(response);
                     setLegalityFile(data.data.public_url);
                     return response;
                   } catch (error) {
@@ -382,7 +371,7 @@ export const RegisterContainer = () => {
                 url: `${BASE_API}/files/upload`,
                 onload: (response: any): string => {
                   try {
-                    const data: UploadedFile = JSON.parse(response);
+                    const data: UploadedFileType = JSON.parse(response);
                     setMouFile(data.data.public_url);
                     return response;
                   } catch (error) {
