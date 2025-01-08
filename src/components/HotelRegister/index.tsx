@@ -522,7 +522,7 @@ export const HotelRegister = () => {
           </BaseContainer>
         </div>
       </div>
-      <Button type="submit">Submit</Button>
+      <Button className="bg-gradient-to-r from-sky-500 to-sky-700 text-white" radius="sm" type="submit">Submit</Button>
     </form>
   );
 };
