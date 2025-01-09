@@ -337,7 +337,15 @@ export const CheckInScanner = () => {
                 <ModalHeader className="flex flex-col gap-1">
                   Check-In Success
                 </ModalHeader>
-                <ModalBody>Success</ModalBody>
+                <ModalBody className="flex flex-col gap-4 items-center justify-center w-full">
+                  <iframe
+                    src={
+                      "https://lottie.host/embed/db40c001-7105-4ce4-9eee-ae9928688a08/rRhddbiJyS.json"
+                    }
+                    className="size-60 mx-auto"
+                  ></iframe>
+                  <p className="uppercase font-bold">Success</p>
+                </ModalBody>
                 <ModalFooter>
                   <Button color="danger" variant="light" onPress={onClose}>
                     Close
@@ -365,7 +373,15 @@ export const CheckInScanner = () => {
                 <ModalHeader className="flex flex-col gap-1">
                   Check-In Failed
                 </ModalHeader>
-                <ModalBody>{errorMessage}</ModalBody>
+                <ModalBody className="flex flex-col gap-4 items-center justify-center w-full">
+                  <iframe
+                    src={
+                      "https://lottie.host/embed/f6cd3132-663a-408b-8854-71a7305cf01b/gCTFmA9BgL.json"
+                    }
+                    className="size-60 mx-auto"
+                  ></iframe>
+                  <p className="uppercase font-bold">{errorMessage}</p>
+                </ModalBody>
                 <ModalFooter>
                   <Button color="danger" variant="light" onPress={onClose}>
                     Close
