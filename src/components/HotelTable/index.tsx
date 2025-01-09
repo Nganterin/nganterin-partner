@@ -66,7 +66,7 @@ export function HotelTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {hotelData.map((item: any, index) => (
+            {hotelData?.map((item: any, index) => (
               <TableRow key={index}>
                 <TableCell className="font-medium">{item.name}</TableCell>
                 <TableCell className="">

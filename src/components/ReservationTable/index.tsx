@@ -36,7 +36,9 @@ export const ReservationTable = () => {
 
       const data = await res.json();
       if (res.ok) {
-        fetchReservationData(data.data[0].id);
+        if (data.data != null) {
+          fetchReservationData(data.data[0].id);
+        }
         setHotelData(data.data);
       } else {
         toast.error(data.message);
