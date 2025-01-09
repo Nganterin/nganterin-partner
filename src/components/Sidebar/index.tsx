@@ -3,7 +3,7 @@
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { IoIosInformationCircleOutline, IoIosList, IoIosTrendingUp } from "react-icons/io";
+import { IoIosInformationCircleOutline, IoIosList, IoIosLogIn, IoIosLogOut, IoIosTrendingUp } from "react-icons/io";
 import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
@@ -84,6 +84,28 @@ export const Sidebar = () => {
           startContent={<IoIosList size={22} />}
         >
           <p className={isCompact ? "hidden" : ""}>Reservations</p>
+        </Button>
+        <Button
+          as={Link}
+          href="/dashboard/checkin"
+          isIconOnly={isCompact}
+          className={`${
+            isCompact ? "" : "flex justify-start"
+          } w-full text-gray-800 ${pathname.endsWith('/dashboard/checkin') ? "bg-slate-50" : "bg-slate-50/50"} hover:bg-slate-50 transition-all duration-400`}
+          startContent={<IoIosLogIn size={22} />}
+        >
+          <p className={isCompact ? "hidden" : ""}>Check In</p>
+        </Button>
+        <Button
+          as={Link}
+          href="/dashboard/checkout"
+          isIconOnly={isCompact}
+          className={`${
+            isCompact ? "" : "flex justify-start"
+          } w-full text-gray-800 ${pathname.endsWith('/dashboard/checkout') ? "bg-slate-50" : "bg-slate-50/50"} hover:bg-slate-50 transition-all duration-400`}
+          startContent={<IoIosLogOut size={22} />}
+        >
+          <p className={isCompact ? "hidden" : ""}>Check Out</p>
         </Button>
         <Button
           as={Link}

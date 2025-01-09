@@ -13,6 +13,7 @@
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-select": "^2.1.4",
     "@tabler/icons-react": "^3.26.0",
+    "@yudiel/react-qr-scanner": "^2.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "filepond": "^4.32.6",

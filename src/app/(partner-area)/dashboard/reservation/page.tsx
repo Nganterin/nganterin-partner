@@ -1,8 +1,10 @@
+"use client";
+
 import { ReservationTable } from "@/components/ReservationTable";
 
 const Page = () => {
   return (
-    <div>
+    <div className="space-y-4">
       <ReservationTable />
     </div>
   );
