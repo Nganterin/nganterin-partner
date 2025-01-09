@@ -1,10 +1,12 @@
 "use client";
 
 import { BackGroundGrid } from "@/components/ui/background-grid";
+import { CheckIfAuthenticated } from "@/lib/withAuth";
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { GoArrowLeft, GoArrowUpRight } from "react-icons/go";
 
 const Layout = ({
@@ -13,6 +15,12 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   const pathname = usePathname();
+
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>();
+
+  useEffect(() => {
+    setIsLoggedIn(CheckIfAuthenticated());
+  }, []);
 
   return (
     <BackGroundGrid boxSize={50}>
@@ -24,7 +32,17 @@ const Layout = ({
             height={100}
             alt="logo"
           />
-          {!pathname.includes("/auth") ? (
+          {isLoggedIn ? (
+            <Button
+              variant="flat"
+              as={Link}
+              href="/dashboard"
+              radius="full"
+              className="text-white bg-gradient-to-r from-sky-500 to-sky-700 shadow-lg shadow-sky-700/30"
+            >
+              Dashboard <GoArrowUpRight size={18} />
+            </Button>
+          ) : !pathname.includes("/auth") ? (
             <Button
               variant="flat"
               as={Link}

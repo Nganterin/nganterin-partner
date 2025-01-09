@@ -10,7 +10,7 @@ type AuthProps = {
 const AUTH_COOKIE_NAME = "partner_jwt";
 const LOGIN_ROUTE = "/auth/login";
 
-const checkIfAuthenticated = (): boolean => {
+export const CheckIfAuthenticated = (): boolean => {
   try {
     const token = Cookies.get(AUTH_COOKIE_NAME);
     return Boolean(token);
@@ -30,7 +30,7 @@ export function withAuth<T extends AuthProps>(
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-      const authStatus = checkIfAuthenticated();
+      const authStatus = CheckIfAuthenticated();
       setIsAuthenticated(authStatus);
       setIsLoading(false);
 
