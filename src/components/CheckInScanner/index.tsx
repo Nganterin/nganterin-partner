@@ -32,8 +32,12 @@ export const CheckInScanner = () => {
   const [reservationData, setReservationData] = useState<any>();
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>();
 
   const detailsModal = useDisclosure();
+  const successModal = useDisclosure();
+  const failedModal = useDisclosure();
 
   useEffect(() => {
     navigator.mediaDevices
@@ -81,6 +85,53 @@ export const CheckInScanner = () => {
       handleScan(scanData.rawValue);
     }
   }, [scanData]);
+
+  const handleCheckIn = async (key: string) => {
+    try {
+      setIsLoading(true);
+      const res = await fetchWithAuth(
+        BASE_API + `/partner/reservation/hotel/checkin?key=${key}`,
+        {
+          method: "POST",
+        }
+      );
+
+      if (res.ok) {
+        successModal.onOpen();
+        toast.success("Check In success");
+      } else {
+        const data = await res.json();
+        setErrorMessage(data.message);
+        failedModal.onOpen();
+      }
+    } catch (err) {
+      console.error(err);
+      const message = "Connection error";
+
+      setErrorMessage(message);
+      toast.error(message);
+
+      failedModal.onOpen();
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const ReservationStatus = ({ status }: Readonly<{ status: any }>) => {
+    if (status == "Confirmed") {
+      return (
+        <div className="text-xs px-2 py-1 bg-gradient-to-r from-sky-500 to-sky-700 text-white rounded-lg">
+          Confirmed
+        </div>
+      );
+    } else {
+      return (
+        <div className="text-xs px-2 py-1 bg-gradient-to-r from-rose-500 to-rose-700 text-white rounded-lg">
+          Checked-In
+        </div>
+      );
+    }
+  };
 
   return (
     <div className="flex flex-wrap gap-4">
@@ -131,13 +182,16 @@ export const CheckInScanner = () => {
         isOpen={detailsModal.isOpen}
         onOpenChange={detailsModal.onOpenChange}
         isDismissable={false}
-        role="details-modal"
-        closeButton={<></>}
+        onClose={() => {
+          setScanData(undefined);
+          setReservationData(null);
+          setIsPaused(false);
+        }}
       >
         <ModalContent>
           {(onClose) => {
-            const checkInDate = new Date(reservationData.check_in_date);
-            const checkOutDate = new Date(reservationData.check_out_date);
+            const checkInDate = new Date(reservationData?.check_in_date);
+            const checkOutDate = new Date(reservationData?.check_out_date);
             const currentDate = new Date();
 
             return (
@@ -213,6 +267,20 @@ export const CheckInScanner = () => {
                           : {checkOutDate.toDateString()}
                         </td>
                       </tr>
+                      <tr>
+                        <td className="w-max text-xs uppercase opacity-80 pr-4">
+                          Reservation Status
+                        </td>
+                        <td className="text-sm flex flex-row gap-1 items-center">
+                          :{" "}
+                          <ReservationStatus
+                            status={
+                              reservationData.hotel_reservation
+                                .reservation_status
+                            }
+                          />
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                   <div className="mt-4">
@@ -225,23 +293,82 @@ export const CheckInScanner = () => {
                   </div>
                 </ModalBody>
                 <ModalFooter>
-                  <Button
-                    color="danger"
-                    variant="light"
-                    onPress={() => {
-                      setScanData(undefined);
-                      setReservationData(null);
-                      setIsPaused(false);
-                      onClose();
-                    }}
-                  >
+                  <Button color="danger" variant="light" onPress={onClose}>
                     Close
                   </Button>
-                  <Button
-                    className="bg-gradient-to-r from-sky-500 to-sky-700 text-white"
-                    onPress={onClose}
-                  >
-                    Checkin
+                  {reservationData.hotel_reservation.reservation_status ==
+                    "Confirmed" && (
+                    <Button
+                      className="bg-gradient-to-r from-sky-500 to-sky-700 text-white flex flex-row gap-2 items-center"
+                      onPress={() => {
+                        handleCheckIn(
+                          reservationData.hotel_reservation.reservation_key
+                        );
+                      }}
+                    >
+                      Check-In
+                      <Spinner
+                        color="white"
+                        size="sm"
+                        className={isLoading ? "" : "hidden"}
+                      />
+                    </Button>
+                  )}
+                </ModalFooter>
+              </>
+            );
+          }}
+        </ModalContent>
+      </Modal>
+      <Modal
+        isOpen={successModal.isOpen}
+        onOpenChange={successModal.onOpenChange}
+        onClose={() => {
+          detailsModal.onClose();
+          setScanData(undefined);
+          setReservationData(null);
+          setIsPaused(false);
+        }}
+      >
+        <ModalContent>
+          {(onClose) => {
+            return (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  Check-In Success
+                </ModalHeader>
+                <ModalBody>Success</ModalBody>
+                <ModalFooter>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
+                </ModalFooter>
+              </>
+            );
+          }}
+        </ModalContent>
+      </Modal>
+      <Modal
+        isOpen={failedModal.isOpen}
+        onOpenChange={failedModal.onOpenChange}
+        onClose={() => {
+          detailsModal.onClose();
+          setScanData(undefined);
+          setReservationData(null);
+          setIsPaused(false);
+        }}
+      >
+        <ModalContent>
+          {(onClose) => {
+            return (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  Check-In Failed
+                </ModalHeader>
+                <ModalBody>{errorMessage}</ModalBody>
+                <ModalFooter>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
                   </Button>
                 </ModalFooter>
               </>
