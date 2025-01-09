@@ -168,7 +168,7 @@ export const CheckInScanner = () => {
           </div>
         )}
         <BaseContainer
-          title="QR Reservation Reader"
+          title="Check-In Reservation QR Scanner"
           description="Please scan digital QR Reservation here"
         >
           <QRCodeReader
