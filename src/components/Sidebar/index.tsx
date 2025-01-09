@@ -26,7 +26,7 @@ export const Sidebar = () => {
   }, []);
 
   const handleLogOut = () => {
-    Cookies.remove("user_jwt");
+    Cookies.remove("partner_jwt");
     window.location.replace("/");
   };
 
@@ -121,7 +121,7 @@ export const Sidebar = () => {
       </div>
       <div>
         <Button
-          onClick={handleLogOut}
+          onPress={handleLogOut}
           isIconOnly={isCompact}
           className={`${
             isCompact ? "" : "flex justify-start"
