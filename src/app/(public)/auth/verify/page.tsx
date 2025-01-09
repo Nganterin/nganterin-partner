@@ -8,10 +8,11 @@ import { toast } from "sonner";
 const Page = () => {
   const [status, setStatus] = useState<string>("loading");
   const [errorMessage, setErrorMessage] = useState<string>();
-  const token = useSearchParams().get("token");
+  const searchParams = useSearchParams()
 
   const fetchData = async () => {
     try {
+      const token = searchParams.get("token")
       const res = await fetch(
         BASE_API + `/partner/auth/verify?token=${token}`,
         {
@@ -41,7 +42,7 @@ const Page = () => {
 
   useEffect(() => {
     fetchData();
-  }, [token]);
+  }, [searchParams]);
 
   return (
     <div className="w-max mx-auto pt-[25vh]">
