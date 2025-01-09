@@ -51,16 +51,16 @@ export const OrderAnalytic = () => {
     <div className="w-full flex flex-wrap gap-4">
       <BaseContainer title="Finance Information" description="Comprehensive hotel income overview">
         <div className="w-max mx-auto">
-          <div className="flex flex-row gap-8">
+          <div className="flex flex-row gap-4 sm:gap-8">
             <div>
-              <h3 className="text-center text-3xl font-semibold">
+              <h3 className="text-center text-xl sm:text-3xl font-semibold">
                 {financeData?.last_month_data.total_income_alt}
               </h3>
               <p className="text-center text-xs opacity-80">Past Month</p>
             </div>
             <div className="h-auto w-[1px] bg-gradient-to-b from-transparent via-sky-600 to-transparent"></div>
             <div>
-              <h3 className="text-center text-3xl font-semibold">
+              <h3 className="text-center text-xl sm:text-3xl font-semibold">
                 {financeData?.total_income_alt}
               </h3>
               <p className="text-center text-xs opacity-80">Past Year</p>

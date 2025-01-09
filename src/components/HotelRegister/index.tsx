@@ -154,7 +154,7 @@ export const HotelRegister = () => {
   };
 
   return (
-    <form className="flex flex-row gap-4" onSubmit={handleSubmit}>
+    <form className="flex flex-col sm:flex-row gap-4" onSubmit={handleSubmit}>
       <div className="h-max">
         <BaseContainer
           title="Hotel Register"
@@ -178,7 +178,7 @@ export const HotelRegister = () => {
               placeholder="The Apurva Kempinski Depok is a resort..."
             />
           </LabelInputContainer>
-          <div className="w-full flex flex-row gap-4">
+          <div className="w-full flex flex-col sm:flex-row gap-4">
             <LabelInputContainer className="mb-4">
               <Label htmlFor="country">Country</Label>
               <Input
@@ -200,7 +200,7 @@ export const HotelRegister = () => {
               />
             </LabelInputContainer>
           </div>
-          <div className="w-full flex flex-row gap-4">
+          <div className="w-full flex flex-col sm:flex-row gap-4">
             <LabelInputContainer className="mb-4">
               <Label htmlFor="city">City</Label>
               <Input
@@ -352,7 +352,7 @@ export const HotelRegister = () => {
                     }
                   />
                 </LabelInputContainer>
-                <div className="w-full flex flex-row gap-4">
+                <div className="w-full flex flex-col sm:flex-row gap-4">
                   <LabelInputContainer className="mb-4">
                     <Label htmlFor="bed_type">Bed Type</Label>
                     <Input
@@ -382,7 +382,7 @@ export const HotelRegister = () => {
                     />
                   </LabelInputContainer>
                 </div>
-                <div className="w-full flex flex-row gap-4">
+                <div className="w-full flex flex-col sm:flex-row gap-4">
                   <LabelInputContainer className="mb-4">
                     <Label htmlFor="room_size">
                       Room Size (m<sup>2</sup>)

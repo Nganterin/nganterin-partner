@@ -20,7 +20,7 @@ export const Navbar = () => {
         height={100}
         alt="logo"
       />
-      <div className="flex flex-row items-center justify-center gap-2">
+      <div className="hidden sm:flex flex-row items-center justify-center gap-2">
         <div className="-space-y-1">
           <p className="text-right text-xl uppercase font-semibold bg-gradient-to-r from-sky-500 to-sky-700 bg-clip-text text-transparent">
             {partnerData ? partnerData.company_name : ""}

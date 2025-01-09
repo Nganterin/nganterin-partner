@@ -24,7 +24,7 @@ const Layout = ({
 
   return (
     <BackGroundGrid boxSize={50}>
-      <nav className="fixed top-0 w-screen">
+      <nav className="fixed top-0 z-50 w-screen">
         <div className="flex flex-row px-8 py-4 items-center justify-between w-full max-w-5xl mx-auto">
           <Image
             src={`/logo/logo-with-text-sky.png`}
