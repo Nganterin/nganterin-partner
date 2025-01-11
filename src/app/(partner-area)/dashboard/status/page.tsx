@@ -59,6 +59,7 @@ const Page = () => {
       <BaseContainer
         title="Approval Status"
         description="The status of your company's data approval will be displayed here."
+        className="w-full sm:w-max"
       >
         <div className="w-full space-y-6">
           <ApprovalProgress

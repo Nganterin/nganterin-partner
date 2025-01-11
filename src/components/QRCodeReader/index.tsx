@@ -17,16 +17,16 @@ export const QRCodeReader = ({
   isPaused: boolean;
 }>) => {
   return (
-    <div className="rounded-xl overflow-hidden">
+    <div className="rounded-xl overflow-hidden w-full">
       <Scanner
         key={deviceId}
-        styles={{ container: { width: "480px", height: "480px" } }}
+        styles={{ container: { width: "100%", height: "100%" } }}
         allowMultiple={false}
         onScan={(result) => setResult(result[0])}
         constraints={{
           deviceId: { exact: deviceId || undefined },
-          width: { ideal: 480 },
-          height: { ideal: 480 },
+          // width: { ideal: 480 },
+          // height: { ideal: 480 },
         }}
         paused={isPaused}
         components={{

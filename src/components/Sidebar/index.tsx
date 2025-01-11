@@ -41,7 +41,7 @@ export const Sidebar = () => {
     <div
       className={`${
         isCompact ? "w-20" : "w-60"
-      } m-4 rounded-lg bg-gradient-to-br from-sky-400 to-sky-500 transition-all duration-300 p-4 space-y-3 flex flex-col justify-between shadow-lg shadow-sky-800/30`}
+      } m-4 rounded-lg bg-gradient-to-br from-sky-400 to-sky-500 transition-all duration-300 p-4 space-y-3 hidden sm:flex flex-col justify-between shadow-lg shadow-sky-800/30`}
     >
       <div className="space-y-3">
         <Button onClick={handleCompactChange} isIconOnly variant="light">

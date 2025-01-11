@@ -19,7 +19,9 @@ export const BaseContainer = ({
 }>) => {
   return (
     <Card
-      className={`${className} w-max flex-grow h-max bg-slate-50 rounded-lg p-2 shadow-lg shadow-sky-800/30`}
+      className={`${className} ${
+        !className?.includes("w-full") && "w-max"
+      } flex-grow h-max bg-slate-50 rounded-lg p-2 shadow-lg shadow-sky-800/30`}
     >
       <CardHeader className={!title && !description ? "hidden" : ""}>
         <CardTitle>{title}</CardTitle>

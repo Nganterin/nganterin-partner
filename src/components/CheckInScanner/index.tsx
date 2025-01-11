@@ -134,11 +134,12 @@ export const CheckInScanner = () => {
   };
 
   return (
-    <div className="flex flex-wrap gap-4">
-      <div className="w-max">
+    <div className="w-full flex flex-wrap gap-4">
+      <div className="w-full sm:w-max">
         <BaseContainer
           title="Camera Device"
           description="Please select a camera device"
+          className="w-full sm:w-max"
         >
           <Select
             defaultValue={deviceId || ""}
@@ -170,6 +171,7 @@ export const CheckInScanner = () => {
         <BaseContainer
           title="Check-In Reservation QR Scanner"
           description="Please scan digital QR Reservation here"
+          className="w-full"
         >
           <QRCodeReader
             deviceId={deviceId}

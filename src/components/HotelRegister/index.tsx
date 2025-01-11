@@ -159,6 +159,7 @@ export const HotelRegister = () => {
         <BaseContainer
           title="Hotel Register"
           description="Sign up your hotel here"
+          className="w-full sm:w-max"
         >
           <LabelInputContainer className="mb-4">
             <Label htmlFor="name">Hotel Name</Label>
@@ -336,7 +337,7 @@ export const HotelRegister = () => {
               <BaseContainer
                 key={index}
                 title={`${item.type} Room`}
-                className="mb-4"
+                className="mb-4 w-full sm:w-max"
               >
                 <LabelInputContainer className="mb-4">
                   <Label htmlFor="type">Type Name</Label>
