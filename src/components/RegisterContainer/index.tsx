@@ -323,7 +323,7 @@ export const RegisterContainer = () => {
             labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
             server={{
               process: {
-                url: `${BASE_API}/files/upload`,
+                url: `${BASE_API}/api/files/upload`,
                 onload: (response: any): string => {
                   try {
                     const data: UploadedFileType = JSON.parse(response);
@@ -368,7 +368,7 @@ export const RegisterContainer = () => {
             labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
             server={{
               process: {
-                url: `${BASE_API}/files/upload`,
+                url: `${BASE_API}/api/files/upload`,
                 onload: (response: any): string => {
                   try {
                     const data: UploadedFileType = JSON.parse(response);
