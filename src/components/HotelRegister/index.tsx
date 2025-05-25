@@ -21,6 +21,7 @@ import { FilePondFile } from "filepond";
 import { toast } from "sonner";
 import { BASE_API } from "@/utilities/environment";
 import fetchWithAuth from "@/utilities/fetchWithAuth";
+import { stringToBoolean } from "@/utilities/convert";
 
 registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
 
@@ -405,7 +406,7 @@ export const HotelRegister = () => {
                     <Select
                       value={item.smoking_allowed.toString()}
                       onValueChange={(e) =>
-                        handleRoomChange(index, "smoking_allowed", e)
+                        handleRoomChange(index, "smoking_allowed", stringToBoolean(e))
                       }
                     >
                       <SelectTrigger>
